@@ -4,14 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SweepStakesProject
+namespace SweepstakesProject
 {
     class Program
     {
         static void Main(string[] args)
-        {
-            SweepStakes TestSweepStake = new SweepStakes();
-            TestSweepStake.Sweepstakes("NHK");
+        {      
+            MarketingFirm firm = new MarketingFirm();
+            firm.MakeManager();
+
+            firm.MakeSweepstake();
+            firm.MakeSweepstake();
+            firm.MakeSweepstake();
+
+            firm.RunSweepstake(firm.manager.GetSweepstakes());
+            firm.RunSweepstake(firm.manager.GetSweepstakes());
+            firm.RunSweepstake(firm.manager.GetSweepstakes());
+
             Console.ReadLine();
         }
     }

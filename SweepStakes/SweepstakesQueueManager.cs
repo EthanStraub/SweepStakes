@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SweepStakesProject
+namespace SweepstakesProject
 {
     class SweepstakesQueueManager : ISweepstakesManager
     {
-        Queue<SweepStakes> SweepQueue = new Queue<SweepStakes>();
-        public void InsertSweepstakes(SweepStakes sweepstakes)
+        Queue<Sweepstakes> sweepstakeQueue = new Queue<Sweepstakes>();
+        public void InsertSweepstakes(Sweepstakes sweepstakes)
         {
-            SweepQueue.Enqueue(sweepstakes);
+            sweepstakeQueue.Enqueue(sweepstakes);
         }
 
-        public void GetSweepstakes()
+        public Sweepstakes GetSweepstakes()
         {
-            
+            Console.WriteLine("//SWEEPSTAKE REMOVED FROM QUEUE//");
+            return sweepstakeQueue.Dequeue();
         }
     }
 }

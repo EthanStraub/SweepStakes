@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SweepStakesProject
+namespace SweepstakesProject
 {
     class SweepstakesStackManager : ISweepstakesManager
     {
-        Stack<SweepStakes> SweepStack = new Stack<SweepStakes>();
-        public void InsertSweepstakes(SweepStakes sweepstakes)
+        Stack<Sweepstakes> sweepstakeStack = new Stack<Sweepstakes>();
+        public void InsertSweepstakes(Sweepstakes sweepstakes)
         {
-            SweepStack.Push(sweepstakes);
+            sweepstakeStack.Push(sweepstakes);
         }
 
-        public void GetSweepstakes()
+        public Sweepstakes GetSweepstakes()
         {
-
+            Console.WriteLine("//SWEEPSTAKE REMOVED FROM STACK//");
+            return sweepstakeStack.Pop();
         }
     }
 }

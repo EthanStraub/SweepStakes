@@ -4,28 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SweepStakesProject
+namespace SweepstakesProject
 {
-    class SweepStakes
+    class Sweepstakes
     {
-        public int MaxNumber = 3;
-        public List<Contestant> ContestantList = new List<Contestant>();
-        public void Sweepstakes(string name)
-        {
-            Console.WriteLine("Welcome to the "+name+" sweepstakes!");
-            for (int i = 0; i < MaxNumber; i++)
-            {
-                Contestant newContestant = new Contestant();
+        public string name;
+        public int maxNumber;
+        public IDictionary<int, string> contestDict = new Dictionary<int, string>();
 
-                Console.WriteLine("Contestant #"+(i+1)+", Please enter your name and email address.");
-                RegisterContestant(newContestant);
-                ContestantList.Add(newContestant);
-            }
-            Console.WriteLine(PickWinner()+ " is the winner!"); 
+        public Sweepstakes(string name)
+        {
+            this.name = name;
+            maxNumber = UserInterface.ManageNumContest(name);
         }
+
         public void RegisterContestant(Contestant contestant)
         {
-            Console.Clear();
             contestant.FirstName = UserInterface.GetFirstName();
             UserInterface.NewLine();
             contestant.LastName = UserInterface.GetLastName();
@@ -34,22 +28,31 @@ namespace SweepStakesProject
             UserInterface.NewLine();
             contestant.RegistrationNum = UserInterface.GetRegisterNum();
             UserInterface.NewLine();
-            Console.WriteLine("Press enter so that the next contestant may enter.");
-            Console.ReadLine();
+
+            Console.WriteLine("Is all of the following information valid? y/n.");
+            PrintContestantInfo(contestant);
+
+            if (ValidateInfo())
+            {
+                Console.WriteLine("Great! Press enter so that the next contestant may enter.");
+                Console.ReadLine();
+                Console.Clear();
+            }
+            else
+            {
+                UserInterface.ReduceRegisterNum();
+                RegisterContestant(contestant);
+            }
         }
         public string PickWinner()
         {
             Random r = new Random();
-            int WinningNumber = r.Next(1, MaxNumber + 1);
-            foreach (Contestant contestant in ContestantList)
+            int winningNumber = r.Next(1, maxNumber + 1);
+            foreach (KeyValuePair<int, string> contestant in contestDict)
             {
-                if (WinningNumber == contestant.RegistrationNum)
+                if (contestant.Key == winningNumber)
                 {
-                    return contestant.FirstName;
-                }
-                else
-                {
-                    continue;
+                    return contestant.Value;
                 }
             }
             return null;
@@ -61,5 +64,28 @@ namespace SweepStakesProject
             Console.WriteLine("Contestant #: "+contestant.RegistrationNum);
         }
 
+        public bool ValidateInfo()
+        {
+            bool validation = false;
+            while (!validation)
+            {
+                string choice = Console.ReadLine();
+                if (choice == "y")
+                {
+                    validation = true;
+                }
+                else if (choice == "n")
+                {
+                    validation = false;
+                    Console.WriteLine("I see. Please retype your information then.");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Please type in 'y' for Yes, and 'n' for No.");
+                }
+            }
+            return validation;
+        }
     }
 }
