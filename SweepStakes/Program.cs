@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Mail;
 
 namespace SweepstakesProject
 {
@@ -11,6 +12,7 @@ namespace SweepstakesProject
         static void Main(string[] args)
         {      
             MarketingFirm firm = new MarketingFirm();
+
             firm.MakeManager();
 
             firm.MakeSweepstake();

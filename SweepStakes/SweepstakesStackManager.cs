@@ -16,6 +16,8 @@ namespace SweepstakesProject
 
         public Sweepstakes GetSweepstakes()
         {
+            Console.Clear();
+            UserInterface.ClearRegisterNum();
             Console.WriteLine("//SWEEPSTAKE REMOVED FROM STACK//");
             return sweepstakeStack.Pop();
         }

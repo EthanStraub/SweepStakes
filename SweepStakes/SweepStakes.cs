@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Mail;
 
 namespace SweepstakesProject
 {
@@ -10,7 +11,9 @@ namespace SweepstakesProject
     {
         public string name;
         public int maxNumber;
-        public IDictionary<int, string> contestDict = new Dictionary<int, string>();
+        public int winningNumber;
+        public IDictionary<int, string> contestNameDict = new Dictionary<int, string>();
+        public IDictionary<int, string> contestEmailDict = new Dictionary<int, string>();
 
         public Sweepstakes(string name)
         {
@@ -47,8 +50,8 @@ namespace SweepstakesProject
         public string PickWinner()
         {
             Random r = new Random();
-            int winningNumber = r.Next(1, maxNumber + 1);
-            foreach (KeyValuePair<int, string> contestant in contestDict)
+            winningNumber = r.Next(1, maxNumber + 1);
+            foreach (KeyValuePair<int, string> contestant in contestNameDict)
             {
                 if (contestant.Key == winningNumber)
                 {
@@ -57,6 +60,19 @@ namespace SweepstakesProject
             }
             return null;
         }
+
+        public string GetWinnerAddress()
+        {
+            foreach (KeyValuePair<int, string> contestant in contestEmailDict)
+            {
+                if (contestant.Key == winningNumber)
+                {
+                    return contestant.Value;
+                }
+            }
+            return null;
+        }
+
         public void PrintContestantInfo(Contestant contestant)
         {
             Console.WriteLine("Contestant name: "+contestant.FirstName+" "+contestant.LastName);
@@ -86,6 +102,25 @@ namespace SweepstakesProject
                 }
             }
             return validation;
+        }
+
+        public void SendMail(string address, string name)
+        {
+            // Command line argument must the the SMTP host.
+            SmtpClient client = new SmtpClient();
+            client.Port = 587;
+            client.Host = "smtp.gmail.com";
+            client.EnableSsl = true;
+            client.Timeout = 10000;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("ethan.straub@gmail.com", "Casaborna#2");
+
+            MailMessage mm = new MailMessage(address, address, "Congratulations, "+name+"!", "You've won the sweepstake!");
+            mm.BodyEncoding = UTF8Encoding.UTF8;
+            mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+
+            client.Send(mm);
         }
     }
 }

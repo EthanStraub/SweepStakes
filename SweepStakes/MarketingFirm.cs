@@ -42,7 +42,8 @@ namespace SweepstakesProject
             SetupSweepstake(newSweepstake);
 
             Console.WriteLine(newSweepstake.PickWinner() + " is the winner!");
-            Console.WriteLine("An email will be sent to their inbox notifying them of their success in the sweepstake.");
+            Console.WriteLine("An email will be sent to their inbox at ("+newSweepstake.GetWinnerAddress()+"), notifying them of their success in the sweepstake.");
+            newSweepstake.SendMail(newSweepstake.GetWinnerAddress(), newSweepstake.PickWinner());
             Console.WriteLine("Thank you for participating! Press ENTER to exit the program, or to start the next sweepstake.");
             Console.ReadLine();
             Console.Clear();
@@ -60,7 +61,8 @@ namespace SweepstakesProject
 
                 Console.WriteLine("Contestant #" + (i + 1) + ", Please enter your name and email address.");
                 sweepstake.RegisterContestant(newContestant);
-                sweepstake.contestDict.Add(newContestant.RegistrationNum, (newContestant.FirstName+" "+newContestant.LastName));
+                sweepstake.contestNameDict.Add(newContestant.RegistrationNum, (newContestant.FirstName+" "+newContestant.LastName));
+                sweepstake.contestEmailDict.Add(newContestant.RegistrationNum, newContestant.EmailAddress);
             }
         }
     }

@@ -30,13 +30,18 @@ namespace SweepstakesProject
         public static int GetRegisterNum()
         {
             regNum += 1;
-            Console.WriteLine("Your registered number is "+regNum);
+            Console.WriteLine("Your registered number is: "+regNum);
             return regNum;
         }
 
         public static void ReduceRegisterNum()
         {
             regNum -= 1;
+        }
+
+        public static void ClearRegisterNum()
+        {
+            regNum = 0;
         }
 
         public static void NewLine()
@@ -70,16 +75,15 @@ namespace SweepstakesProject
             bool validation = false;
             while (!validation)
             {
-                Console.WriteLine("How many contestants should there be for sweepstake '"+name+"'? Type a positive integer between 1 and 20.");
+                Console.WriteLine("How many contestants should there be for sweepstake '"+name+"'? Type a positive integer between 2 and 20.");
                 string choice = Console.ReadLine();
                 int intchoice;
 
                 if (int.TryParse(choice, out intchoice))
                 {
-                    if (intchoice >= 1 && intchoice <= 20)
+                    if (intchoice >= 2 && intchoice <= 20)
                     {
                         validation = true;
-                        Console.Clear();
                         return intchoice;
                     }
                 }
@@ -89,7 +93,7 @@ namespace SweepstakesProject
                 }
                 Console.WriteLine("Please try again.");
             }
-            return 0;
+            return 2;
         }
     }
 }
