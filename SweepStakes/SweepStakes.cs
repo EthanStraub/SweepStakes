@@ -114,7 +114,7 @@ namespace SweepstakesProject
             client.Timeout = 10000;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential("ethan.straub@gmail.com", "Casaborna#2");
+            client.Credentials = new System.Net.NetworkCredential("biblebot99@gmail.com", "Carbuncle#9");
 
             MailMessage mm = new MailMessage(address, address, "Congratulations, "+name+"!", "You've won the sweepstake!");
             mm.BodyEncoding = UTF8Encoding.UTF8;
